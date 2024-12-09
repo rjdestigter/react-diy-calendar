@@ -1,0 +1,17 @@
+.companyHours {
+    display: grid;
+    grid-template-rows: repeat(1440, minmax(0px, 1fr));
+    grid-template-columns: var(--grid-template-columns, repeat(7, 1fr));
+}
+
+.companyHour {
+    display: grid;
+    position: relative;
+    grid-column-start: var(--week-day);
+    grid-row-start: var(--start);
+    grid-row-end: var(--end);
+}
+
+.companyHour div {
+    background: rgb(255, 255, 255);
+}

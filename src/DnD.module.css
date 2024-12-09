@@ -1,0 +1,19 @@
+.container {
+    --pointer-interaction--snap: 15;
+}
+
+.container>div {
+    --duration: calc(var(--dnd-event--end) - var(--dnd-event--start));
+    grid-column-start: var(--grid-column-start);
+}
+
+.container[data-state='dragging']>div {
+    --dragging-grid-row-start: calc(var(--grid-row-start) - var(--dnd-offset--y, 0));
+    grid-row-start: var(--dragging-grid-row-start);
+    grid-row-end: calc(var(--dragging-grid-row-start) + var(--duration));
+}
+
+.container[data-state='resizing']>div {
+    grid-row-start: var(--dnd-event--start);
+    grid-row-end: var(--grid-row-start);
+}

@@ -1,0 +1,107 @@
+.events {
+    display: grid;
+    grid-template-rows: repeat(1440, minmax(0px, 1fr));
+    pointer-events: none;
+    grid-template-columns: var(--grid-template-columns);
+}
+
+.event {
+    position: relative;
+    grid-column-start: calc(var(--column, 0) + 1);
+    grid-row-start: var(--start);
+    grid-row-end: var(---end);
+    overflow: hidden;
+    pointer-events: none;
+    z-index: var(--end);
+
+    container-name: event;
+    container-type: size;
+}
+
+.event[data-dragging='true'] {
+    opacity: 0.2;
+}
+
+.content {
+    position: absolute;
+    --column-width: calc(100% / var(--columns));
+    width: calc(var(--column-width) * var(--width));
+    left: calc(var(--column-width) * var(--offset-start));
+    height: 100%;
+    pointer-events: all;
+    transition: left 0.2s, width 0.2s;
+}
+
+[data-active-column='0'] [data-event-column="0"] .content,
+[data-active-column='1'] [data-event-column="1"] .content,
+[data-active-column='2'] [data-event-column="2"] .content,
+[data-active-column='3'] [data-event-column="3"] .content,
+[data-active-column='4'] [data-event-column="4"] .content,
+[data-active-column='5'] [data-event-column="5"] .content,
+[data-active-column='6'] [data-event-column="6"] .content {
+    --column-width: calc(100% / var(--expanded-columns));
+    left: calc(var(--column-width) * var(--expanded-offset));
+    width: var(--column-width);
+}
+
+[data-root][data-active-column='-1'] [data-single-assignee] {
+    display: none;
+}
+
+[data-root]:not([data-active-column='-1']) [data-combined-assignees] {
+    display: none;
+}
+
+[data-active-column='-1'] .dragoverlay .content {
+    width: 100%;
+    left: 0;
+}
+
+.event:has(.appointment[aria-pressed='true']) {
+    overflow: visible;
+}
+
+.appointment {
+    position: absolute;
+    display: block;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    padding: 3px 5px;
+    background-color: var(--color, #ffb2e5);
+    border-radius: 3px;
+    border: 1px solid #ffffff;
+    color: black;
+    font-size: 0.7em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.event[data-dragging='false'] .appointment:hover,
+.event[data-dragging='true'] .appointment {
+    /* z-index: 2; */
+    border-color: black;
+}
+
+@container event (height <= 1em) {
+    .appointment {
+        font-size: min(0.7em, 80cqh);
+        line-height: calc(100cqh - 2px);
+        padding: 0 3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        /* border-width: 0.5px; */
+    }
+}
+
+.resizer {
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 8px;
+    cursor: s-resize;
+}

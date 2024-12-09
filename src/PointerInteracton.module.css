@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    grid-template-rows: repeat(1440, minmax(0px, 1fr)) auto;
+    grid-template-columns: var(--grid-template-columns);
+    container-name: dropzone;
+    container-type: size;
+    --grid-row-start: max(round(down, calc(1440 * calc(var(--pointer-interaction--y) - var(--pointer-interaction--top) + var(--scroll-y, 0)) / var(--pointer-interaction--height)), var(--pointer-interaction--snap, 1)), 1);
+    --grid-column-start: calc(7 * var(--pointer-interaction--x) / var(--pointer-interaction--width));
+}
